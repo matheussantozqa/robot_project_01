@@ -1,5 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
+Variables    ../variables/variables.py
 
 
 *** Keywords ***
@@ -9,16 +10,15 @@ I navigate to the login page
     Go To    ${URL}
 
 I Input correct credentials
-    [Arguments]    ${USERNAME}    ${PASSWORD}
     Wait Until Element Is Visible    id=user-name
-    Input Text    id=user-name    ${USERNAME}
-    Input Text    id=password    ${PASSWORD}
+    Input Text    id=user-name    ${LOGIN_DATA}[correctData][username]
+    Input Text    id=password     ${LOGIN_DATA}[correctData][password]
+
 
 I Input Incorrect Credentials
-    [Arguments]    ${INVALID_USERNAME}    ${INVALID_PASSWORD}
     Wait Until Element Is Visible    id=user-name
-    Input Text    id=user-name    ${INVALID_USERNAME}
-    Input Text    id=password    ${INVALID_PASSWORD}
+    Input Text    id=user-name    ${LOGIN_DATA}[incorrectData][username]
+    Input Text    id=password    ${LOGIN_DATA}[incorrectData][password]
     
 I Click on the Login Button    
     Click Button    id=login-button    
@@ -27,19 +27,25 @@ I Am Able to View Home Page
     ${location}    Get Location
     Should Be Equal   ${location}    https://www.saucedemo.com/inventory.html
 
-I See Error Message Expected
-    [Arguments]    ${ERROR_MESSAGE}
-    Element Should Contain    css=.error-message-container    ${ERROR_MESSAGE}
+I See No Credentials Error Message
+    Element Should Contain    css=.error-message-container    ${ERROR_MESSAGES}[noCredentials]
 
-I Input Only Username
-    [Arguments]    ${USERNAME}
+I See No Username Error Message
+    Element Should Contain    css=.error-message-container    ${ERROR_MESSAGES}[missingUsername]
+
+I See No Password Error Message
+    Element Should Contain    css=.error-message-container    ${ERROR_MESSAGES}[missingPassword]
+
+I See Invalid Credentials Error Message
+    Element Should Contain    css=.error-message-container    ${ERROR_MESSAGES}[invalidCredentials]
+
+I Input Only Username   
     Wait Until Element Is Visible    id=user-name
-    Input Text    id=user-name    ${USERNAME}
+    Input Text    id=user-name    ${LOGIN_DATA}[correctData][username]
 
 I Input Only Password
-    [Arguments]    ${PASSWORD}
     Wait Until Element Is Visible    id=password
-    Input Text    id=password    ${PASSWORD}
+    Input Text    id=password    ${LOGIN_DATA}[correctData][password]
 
 I Input No Credentials
     Wait Until Element Is Visible    id=user-name

@@ -2,26 +2,18 @@
 
 Library    SeleniumLibrary
 Resource    ../resources/login_keywords.resource
-Test Setup    Open Browser    browser=chrome
-
-
+Suite Setup    Open Browser    browser=chrome
 
 *** Variables ***
 ${URL}    https://www.saucedemo.com
-${BROWSER}    chrome
-${VALID_USERNAME}    standard_user
-${VALID_PASSWORD}    secret_sauce
-${INVALID_USERNAME}    wrong_user
-${INVALID_PASSWORD}    wrong_password
 
 *** Test Cases ***
 Valid Login
     [Documentation]    Test a valid login scenario.
     I navigate to the login page    ${URL}
-    I Input correct credentials    ${VALID_USERNAME}    ${VALID_PASSWORD}
+    I Input correct credentials    
     I Click on the Login Button
     I Am Able to View Home Page
-    Close Browser
     
 
 Unsuccessful Login - Empty Fields
@@ -29,29 +21,27 @@ Unsuccessful Login - Empty Fields
     I navigate to the login page    ${URL}
     I Input No Credentials
     I Click on the Login Button
-    I See Error Message Expected    Epic sadface: Username is required
-    Close Browser
+    I See No Credentials Error Message
 
 Unsuccessful Login - No username 
     [Documentation]    Test an unsuccessful login scenario with no username.
     I navigate to the login page    ${URL}
-    I Input Only Password    ${VALID_PASSWORD}
+    I Input Only Password 
     I Click on the Login Button
-    I See Error Message Expected    Epic sadface: Username is required
-    Close Browser
+    I See No Username Error Message
+
 
 Unsuccessful Login - No password
     [Documentation]    Test an unsuccessful login scenario with no password.
     I navigate to the login page    ${URL}
-    I Input Only Username    ${VALID_USERNAME}
+    I Input Only Username
     I Click on the Login Button
-    I See Error Message Expected     Epic sadface: Password is required
-    Close Browser
+    I See No Password Error Message
+
 
 Unsuccessful Login - Wrong credentials
     [Documentation]    Test an unsuccessful login scenario with wrong credentials.
     I navigate to the login page    ${URL}
-    I Input Incorrect Credentials    ${INVALID_USERNAME}    ${INVALID_PASSWORD}
+    I Input Incorrect Credentials  
     I Click on the Login Button
-    I See Error Message Expected    Epic sadface: Username and password do not match any user in this service
-    Close Browser
+    I See Invalid Credentials Error Message
