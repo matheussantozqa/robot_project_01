@@ -6,8 +6,7 @@ Variables    ../variables/variables.py
 *** Keywords ***
 
 I navigate to the login page
-    [Arguments]    ${URL}
-    Go To    ${URL}
+    Go To    ${URL_DATA}[baseUrl]
 
 I Input correct credentials
     Wait Until Element Is Visible    id=user-name
@@ -25,7 +24,8 @@ I Click on the Login Button
 
 I Am Able to View Home Page
     ${location}    Get Location
-    Should Be Equal   ${location}    https://www.saucedemo.com/inventory.html
+    ${full_url}=    Catenate    SEPARATOR=    ${URL_DATA}[baseUrl]    /inventory.html
+    Should Be Equal    ${location}    ${full_url}
 
 I See No Credentials Error Message
     Element Should Contain    css=.error-message-container    ${ERROR_MESSAGES}[noCredentials]

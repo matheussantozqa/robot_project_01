@@ -15,3 +15,9 @@ ERROR_MESSAGES = {
     "missingPassword": "Epic sadface: Password is required",
     "invalidCredentials": "Epic sadface: Username and password do not match any user in this service",
 }
+
+URL_DATA = {
+    "baseUrl": "https://www.saucedemo.com",
+    "inventoryUrl": "https://www.saucedemo.com/inventory.html",
+    "cartUrl": "https://www.saucedemo.com/cart.html",
+}
